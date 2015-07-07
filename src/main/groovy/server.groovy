@@ -1,6 +1,4 @@
 import io.vertx.groovy.ext.web.Router
-import io.vertx.core.Vertx
-import io.vertx.core.http.HttpClient
 import io.vertx.groovy.core.buffer.Buffer
 import io.vertx.groovy.core.http.HttpClientResponse
 import groovy.json.JsonSlurper
@@ -12,7 +10,7 @@ def server = vertx.createHttpServer()
 
 def router = Router.router(vertx)
 
-def route = router.route('/weather/:city').handler(
+router.route('/weather/:city').handler(
     { routingContext ->
 
         def city = routingContext.request().getParam('city')
