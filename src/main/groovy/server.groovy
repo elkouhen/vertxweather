@@ -40,7 +40,7 @@ def route = router.route('/weather/:city').handler(
             })
         .flatMap ({data ->
 
-                def observable =  rx.Observable.create({ subscriber ->
+                return rx.Observable.create({ subscriber ->
 
                         def weatherRequest = client.get(443, 'simple-weather.p.mashape.com',
 				      "/weatherdata?lat=${data[0]}&lng=${data[1]}",
@@ -59,12 +59,10 @@ def route = router.route('/weather/:city').handler(
                         weatherRequest.putHeader('Accept', 'application/json')
                         weatherRequest.putHeader('X-Mashape-Key', maShapeKey)
 
-                        weatherRequest.end();
+                        weatherRequest.end()
 
-                        return subscriber;
-                    });
-
-                return observable;
+                        return subscriber
+                    })
             })
         .subscribe({weatherRespData ->
 
